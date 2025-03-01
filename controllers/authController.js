@@ -18,7 +18,16 @@ exports.register = async (req, res) => {
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
-    res.status(201).json({ message: "User created successfully" });
+    // Generate JWT
+    const token = jwt.sign({ id: newUser._id, email: newUser.email }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    res.status(201).json({
+      message: "User created successfully",
+      user: { id: newUser._id, name: newUser.name, email: newUser.email },
+      token,
+    });
   } catch (error) {
     console.error("Registration Error:", error);
     res.status(500).json({ message: "Internal server error" });
