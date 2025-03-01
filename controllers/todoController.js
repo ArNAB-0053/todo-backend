@@ -2,7 +2,8 @@ const Todo = require("../models/Todo");
 
 exports.getTodos = async (req, res) => {
   try {
-    const todos = await Todo.find({ user: req.user.id });
+    const userId = req.params.userId;    
+    const todos = await Todo.find({ user: userId });
     res.json(todos);
   } catch (error) {
     res.status(500).json({ message: error.message });

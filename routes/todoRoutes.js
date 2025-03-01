@@ -3,7 +3,7 @@ const { getTodos, createTodo, updateTodo, deleteTodo } = require("../controllers
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
-router.get("/get", authMiddleware, getTodos);
+router.get("/get/:userId", authMiddleware, getTodos);
 router.post("/post", authMiddleware, createTodo);
 router.put("/:id", authMiddleware, updateTodo);
 router.delete("/:id", authMiddleware, deleteTodo);
